@@ -6,6 +6,7 @@
 #define _SPACE_ KC_SPC
 #define TAB_FN1 LT(1,KC_TAB)
 #define SCRNCAP LGUI(LSFT(KC_4))
+#define COLORCAP LCTL(LALT(LGUI(KC_C)))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = {  /* Base */
@@ -16,8 +17,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
   [1] = { /* FN1 // Left FN */
     {KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______, _______, _______, KC_UP,   _______,  SCRNCAP, KC_DELETE},
-    {_______, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______, M(1),    KC_LEFT, KC_DOWN, KC_RIGHT, KC_QUOT, S(KC_QUOT)},
-    {_______, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______, _______, _______, KC_PAUS, KC_VOLD,  KC_VOLU, KC_MUTE},
+    {_______, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______, M(1),    KC_LEFT, KC_DOWN, KC_RIGHT, _______, KC_QUOT},
+    {_______, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, COLORCAP,_______, _______, KC_PAUS, KC_VOLD,  KC_VOLU, KC_MUTE},
     {_______, _______, _______, _______, _______, _SPACE_, __NO___, _______, KC_SLCK, KC_MPRV,  KC_MNXT, KC_MPLY}
   },
   [2] = { /* FN2 // Right FN */
