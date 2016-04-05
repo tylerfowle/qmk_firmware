@@ -4,7 +4,7 @@
 #define __NO___ KC_NO
 #define _______ KC_TRNS
 #define _SPACE_ KC_SPC
-#define TAB_FN1 LT(1,KC_TAB)
+#define TAB_FN1 LT(2,KC_TAB)
 #define SCRNCAP LGUI(LSFT(KC_4))
 #define COLORCAP LCTL(LALT(LGUI(KC_C)))
 
