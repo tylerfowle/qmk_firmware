@@ -42,8 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
 */ 
-#define COLS (int []){ F1, F0, B0 }
-#define ROWS (int []){ D0, D5 }
+#define COLS (int []){ F7, B6, B5, B4, D7, C7, C6, D3, D2, D1, D0, B7 }
+#define ROWS (int []){ F0, F1, F4, F5  }
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
