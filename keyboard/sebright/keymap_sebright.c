@@ -21,7 +21,6 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		TRNS,  TRNS,  TRNS,	  TRNS,	       TRNS, TRNS, TRNS, TRNS),
 };
 const uint16_t PROGMEM fn_actions[] = {
-    /* Sebright Layout */
     [1] = ACTION_LAYER_MOMENTARY(1),
     [2] = ACTION_LAYER_MOMENTARY(2),
     [3] = ACTION_LAYER_MOMENTARY(3),
