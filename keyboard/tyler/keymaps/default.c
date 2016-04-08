@@ -15,24 +15,26 @@
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /* 0: base */
- KEYMAP(
-  M(0),      KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,      KC_P,       KC_BSPC, \
-  TAB_FN1,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,     KC_H,     KC_J,     KC_K,     KC_L,      KC_ENT, \
-  KC_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,    KC_SLSH, \
-      KC_LCTL,   KC_LALT,  KC_LGUI,     _SPACE_,           MO(1),    MO(2),    KC_PAUS,  KC_RSFT),
-    /* 1: numbers and arrows */
- KEYMAP(
-  _______,   KC_1,    KC_2,    KC_3,    KC_4,    _______,  _______,  _______,  KC_UP,    _______,   SCRNCAP,    KC_DEL, \
-  KC_CAPS,   KC_5,    KC_6,    KC_7,    KC_8,    _______,  M(1),     KC_LEFT,  KC_DOWN,  KC_RIGHT,  _______, \
-  _______,   KC_9,    KC_0,    KC_MINS, KC_EQUAL,COLORCAP, _______,  _______,  KC_VOLD,  KC_VOLU,   KC_MUTE, \
-      _______,   _______,  _______,   _______,             _______,  KC_MPRV,  KC_MNXT,  KC_MPLY),
-    /* 2: symbols */
- KEYMAP(
-  _______,   KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______,  _______,  KC_LBRC,  KC_RBRC,  KC_QUOT,   S(KC_QUOT), KC_BSPC, \
-  _______,   KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______,  _______,  KC_LCBR,  KC_RCBR,  KC_MINS,   KC_UNDS, \
-  _______,   KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______,  _______,  KC_LPRN,  KC_RPRN,  _______,   _______, \
-      _______,   _______,  _______,     _______,           _______,  _______,  _______,  _______),
+  [0] = { /* 0: base */
+    {M(0),      KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,      KC_P,       KC_BSPC},
+    {TAB_FN1,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,     KC_H,     KC_J,     KC_K,     KC_L,      KC_ENT},
+    {KC_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,    KC_SLSH},
+    {    KC_LCTL,   KC_LALT,  KC_LGUI,     _SPACE_,           MO(1),    MO(2),    KC_PAUS,  KC_RSFT}
+  },
+  /* 1: numbers and arrows */
+  [1] = { 
+    {_______,   KC_1,    KC_2,    KC_3,    KC_4,    _______,  _______,  _______,  KC_UP,    _______,   SCRNCAP,    KC_DEL},
+    {KC_CAPS,   KC_5,    KC_6,    KC_7,    KC_8,    _______,  M(1),     KC_LEFT,  KC_DOWN,  KC_RIGHT,  KC_QUOT},
+    {_______,   KC_9,    KC_0,    KC_MINS, KC_EQUAL,COLORCAP, _______,  _______,  KC_VOLD,  KC_VOLU,   KC_MUTE},
+    {    _______,   _______,  _______,   _______,             _______,  KC_MPRV,  KC_MNXT,  KC_MPLY}
+  },
+  /* 2: symbols */
+  [2] = { 
+    {_______,   KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______,  _______,  KC_LBRC,  KC_RBRC,  KC_QUOT,   S(KC_QUOT), KC_BSPC},
+    {_______,   KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______,  _______,  KC_LCBR,  KC_RCBR,  KC_MINS,   KC_UNDS},
+    {_______,   KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______,  _______,  KC_LPRN,  KC_RPRN,  _______,   _______},
+    {    _______,   _______,  _______,     _______,           _______,  _______,  _______,  _______}
+  }
 };
 
 
@@ -44,6 +46,8 @@ const uint16_t PROGMEM fn_actions[] = {
 
   [31] = ACTION_MODS_TAP_KEY(MOD_LSFT, KC_QUOTE),
 };
+
+
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
