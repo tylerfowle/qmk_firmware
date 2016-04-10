@@ -39,23 +39,26 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = sebright_lufa
+TARGET = sebright
+
 
 # Directory common source filess exist
+TOP_DIR = ../..
 TMK_DIR = ../../tmk_core
 
 # Directory keyboard dependent files exist
 TARGET_DIR = .
 
-# project specific files
-SRC =	keymap_common.c \
-	matrix.c \
-	led.c
+# # project specific files
+SRC = sebright.c
 
-    SRC := keymap_sebright.c $(SRC)
+ifdef KEYMAP
+    SRC := keymaps/$(KEYMAP).c $(SRC)
+else
+    SRC := keymaps/default.c $(SRC)
+endif
 
 CONFIG_H = config.h
-
 
 # MCU name
 #MCU = at90usb1287
@@ -104,19 +107,25 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 #   Atmel DFU loader 4096
 #   LUFA bootloader  4096
 #   USBaspLoader     2048
-OPT_DEFS += -DBOOTLOADER_SIZE=4096
+OPT_DEFS += -DBOOTLOADER_SIZE=512
 
 
 # Build Options
 #   comment out to disable the options.
 #
-BOOTMAGIC_ENABLE = yes	# Virtual DIP switch configuration(+1000)
-MOUSEKEY_ENABLE = yes	# Mouse keys(+4700)
-EXTRAKEY_ENABLE = yes	# Audio control and System control(+450)
-CONSOLE_ENABLE = yes	# Console for debug(+400)
-COMMAND_ENABLE = yes    # Commands for debug and configuration
-#SLEEP_LED_ENABLE = yes  # Breathing sleep LED during USB suspend
-NKRO_ENABLE = yes	# USB Nkey Rollover - not yet supported in LUFA
+BOOTMAGIC_ENABLE = yes		# Virtual DIP switch configuration(+1000)
+MOUSEKEY_ENABLE = yes		# Mouse keys(+4700)
+EXTRAKEY_ENABLE = yes		# Audio control and System control(+450)
+CONSOLE_ENABLE = yes		# Console for debug(+400)
+COMMAND_ENABLE = yes		# Commands for debug and configuration
+KEYBOARD_LOCK_ENABLE = yes	# Allow locking of keyboard via magic key
+# Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
+# SLEEP_LED_ENABLE = yes	# Breathing sleep LED during USB suspend
+#NKRO_ENABLE = yes			# USB Nkey Rollover - if this doesn't work, see here: https://github.com/tmk/tmk_keyboard/wiki/FAQ#nkro-doesnt-work
+# BACKLIGHT_ENABLE = yes	# Enable keyboard backlight functionality
+# MIDI_ENABLE = YES			# MIDI controls
+# UNICODE_ENABLE = YES		# Unicode
+# BLUETOOTH_ENABLE = yes	# Enable Bluetooth with the Adafruit EZ-Key HID
 
 
 # Optimize size but this may cause error "relocation truncated to fit"
@@ -124,8 +133,8 @@ NKRO_ENABLE = yes	# USB Nkey Rollover - not yet supported in LUFA
 
 # Search Path
 VPATH += $(TARGET_DIR)
+VPATH += $(TOP_DIR)
 VPATH += $(TMK_DIR)
 
-include $(TMK_DIR)/protocol/lufa.mk
-include $(TMK_DIR)/common.mk
-include $(TMK_DIR)/rules.mk
+include $(TOP_DIR)/quantum/quantum.mk
+

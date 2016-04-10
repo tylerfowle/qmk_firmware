@@ -1,45 +1,24 @@
-Sebright keyboard firmware
+sebright keyboard firmware
 ======================
-DIY compact keyboard designed by Alex Jackson (Panc Interactive).
 
+## Quantum MK Firmware
 
-## Build
-Move to this directory then just run `make` like:
+For the full Quantum feature list, see [the parent README.md](/README.md).
 
-    $ make
+## Building
 
-Use `make -f Makefile.pjrc` if you want to use PJRC stack but I find no reason to do so now.
+Download or clone the whole firmware and navigate to the keyboard/sebright folder. Once your dev env is setup, you'll be able to type `make` to generate your .hex - you can then use the Teensy Loader to program your .hex file. 
 
+Depending on which keymap you would like to use, you will have to compile slightly differently.
 
-## Layouts
+### Default
+To build with the default keymap, simply run `make`.
 
-    /* 0: sebright */
-	 KEYMAP(ESC,   Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P, BSPC, \
-			TAB,   A,   S,   D,   F,   G,   H,   J,   K,   L,   ENT, \
-			LCTL,  Z,   X,   C,   V,   B,   N,   M,   COMM, FN1,  FN0, \
-			LSFT,  LALT,     FN2,	 SPC,	QUOT,DOT, FN31,SLSH),
-			
-    /* 1: numfunc */
-	 KEYMAP(GRV,   1,   2,   3,   4,   5,   6,   7,   8,   9,   0, DEL, \
-			CAPS,  TRNS, TRNS, TRNS,  FN3,DOT, MINS, EQL,  LBRC,RBRC, ENT, \
-			TRNS,TRNS,TRNS,TRNS,FN11,TRNS,TRNS,INS,PSCR,TRNS, TRNS, \
-			TRNS,  TRNS,TRNS,	  TRNS,	     END,  PGUP, PGDN, TRNS),
-    /* 2: arrow */
-	 KEYMAP(ESC,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, TRNS, \
-			TRNS, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  \
-			TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, TRNS, \ 
-			TRNS,  TRNS,TRNS,	  TRNS,	       LEFT,UP,  DOWN, RIGHT),
-    /* 3: symbol */
-	 KEYMAP(ESC,   1,   2,   3,   4,   5,   6,   7,   8,   9,   0, DEL, \
-			BSPC,  A,   R,   S,   T,   D,   H,   N,   E,   I,   O, \
-			LSFT,  Z,   X,   C,   V,   B,   K,   M,   COMM,FN1, FN0, \
-			LCTL,  LALT,FN2,	  SPC,	    LEFT,UP,  DOWN, RIGHT),
-};
-const uint16_t PROGMEM fn_actions[] = {
-    /* Sebright Layout */
-    [0] = ACTION_LAYER_MOMENTARY(1),  // to numfunc overlay
-    [1] = ACTION_LAYER_TOGGLE(2),     // toggle arrow overlay
-    [2] = ACTION_LAYER_MOMENTARY(3),  // toggle symbol overlay
-    [31] = ACTION_MODS_TAP_KEY(MOD_LSFT, KC_QUOTE),
-	};
+### Other Keymaps
+Several version of keymap are available in advance but you are recommended to define your favorite layout yourself. To define your own keymap create file named `<name>.c` in the keymaps folder, and see keymap document (you can find in top README.md) and existent keymap files.
 
+To build the firmware binary hex file with a keymap just do `make` with `KEYMAP` option like:
+```
+$ make KEYMAP=[default|jack|<name>]
+```
+Keymaps follow the format **__\<name\>.c__** and are stored in the `keymaps` folder.
