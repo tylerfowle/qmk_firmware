@@ -23,8 +23,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* 1: numbers and arrows */
   [1] = { 
     {_______,   KC_1,    KC_2,    KC_3,    KC_4,    _______,  _______,  _______,  KC_UP,    _______,   SCRNCAP,    KC_DEL},
-    {_______,   KC_5,    KC_6,    KC_7,    KC_8,    _______,  M(1),     KC_LEFT,  KC_DOWN,  KC_RIGHT,  __NO___,    KC_QUOT},
-    {KC_CAPS,   __NO___, KC_9,    KC_0,    KC_MINS, KC_EQUAL, COLORCAP, _______,  _______,  KC_VOLD,   KC_VOLU,    KC_MUTE},
+    {_______,   KC_5,    KC_6,    KC_7,    KC_8,    _______,  M(1),     KC_LEFT,  KC_DOWN,  KC_RIGHT,  __NO___,    KC_SCLN},
+    {_______,   __NO___, KC_9,    KC_0,    KC_MINS, KC_EQUAL, COLORCAP, _______,  _______,  KC_VOLD,   KC_VOLU,    KC_MUTE},
     {__NO___,   _______, __NO___, _______,  _______,_______,  __NO___,  _______,  KC_MPRV,  KC_MNXT,   KC_MPLY}
   },
   /* 2: symbols */
