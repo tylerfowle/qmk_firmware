@@ -14,6 +14,9 @@
 #define SCRNCAP LGUI(LSFT(KC_4))
 #define COLORCAP LCTL(LALT(LGUI(KC_C)))
 
+#define LEFTSCR LALT(KC_1)
+#define RIGHSCR LALT(KC_2)
+
 
 
 // blank layer
@@ -49,10 +52,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
   // layer 3: media keys
   [3] = { 
-    {_______,   _______, _______, _______, _______, _______,  _______,  _______,  _______,  _______,   _______,    _______},
-    {_______,   _______, _______, _______, _______, _______,  _______,  _______,  _______,  _______,   XXXXXXX,    _______},
+    {_______,   _______, _______, _______, _______, _______,  _______,  _______,  _______,  _______,   _______,    KC_DEL},
+    {_______,   LEFTSCR, RIGHSCR, _______, _______, _______,  _______,  _______,  _______,  _______,   XXXXXXX,    _______},
     {_______,   XXXXXXX, _______, _______, _______, _______,  _______,  _______,  KC_MUTE,  KC_VOLD,   KC_VOLU,    _______},
-    {XXXXXXX,   _______, XXXXXXX, _______, _______, _______,  XXXXXXX,  _______,  KC_MPRV,   KC_MNXT,  KC_MPLY}
+    {XXXXXXX,   _______, XXXXXXX, _______, _______, _______,  XXXXXXX,  _______,  KC_MPRV,  KC_MNXT,   KC_MPLY}
   }
 };
 
