@@ -8,7 +8,7 @@
 #define __NO___ KC_NO
 #define _______ KC_TRNS
 #define _SPACE_ KC_SPC
-#define TAB_FN1 LT(2,KC_TAB)
+#define TAB_FN1 LT(1,KC_TAB)
 #define SCRNCAP LGUI(LSFT(KC_4))
 #define COLORCAP LCTL(LALT(LGUI(KC_C)))
 
@@ -40,11 +40,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 const uint16_t PROGMEM fn_actions[] = {
-  [1] = ACTION_LAYER_MOMENTARY(1),
-  [2] = ACTION_LAYER_MOMENTARY(2),
-  [3] = ACTION_LAYER_MOMENTARY(3),
-
-  [31] = ACTION_MODS_TAP_KEY(MOD_LSFT, KC_QUOTE),
 };
 
 
