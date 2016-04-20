@@ -51,8 +51,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   },
   [3] = { 
     {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  _______,  _______,  KC_UP,    COLORCAP,  SCRNCAP,   KC_DEL  },
-    {_______,   LEFTSCR, RIGHSCR, _______, _______, _______,  XXXXXXX,  _______,  KC_LEFT,  KC_DOWN,  KC_RIGHT,  _______,   M(1)    },
-    {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  _______,  KC_MUTE,  KC_VOLD,   KC_VOLU,  _______,   _______ },
+    {_______,   LEFTSCR, RIGHSCR, COLORCAP,_______, _______,  XXXXXXX,  _______,  KC_LEFT,  KC_DOWN,  KC_RIGHT,  _______,   M(1)    },
+    {_______,   _______, _______, SCRNCAP, _______, _______,  XXXXXXX,  _______,  KC_MUTE,  KC_VOLD,   KC_VOLU,  _______,   _______ },
     {XXXXXXX,   XXXXXXX, _______, _______, _______, _______,  _______,  _______,  KC_MPRV,  KC_MNXT,  KC_MPLY,   XXXXXXX,   XXXXXXX }
   },
   // [1] = { 
