@@ -45,17 +45,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______,   KC_9,    KC_0,    KC_MINS, KC_EQUAL,_______,  XXXXXXX,  _______,  _______,  _______,  _______,   _______,   _______ },
     {XXXXXXX,   XXXXXXX, _______, _______, _______, _______,  _______,  _______,  _______,  _______,  _______,   XXXXXXX,   XXXXXXX }
   },
+  // layer 2: symbols
   [2] = { 
     {_______,   KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______,  XXXXXXX,  _______,  KC_LBRC,  KC_RBRC,  _______,   _______,   KC_BSPC },
     {_______,   KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______,  XXXXXXX,  _______,  KC_LCBR,  KC_RCBR,  KC_MINS,   KC_UNDS,   _______ },
     {_______,   KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______,  XXXXXXX,  _______,  KC_LPRN,  KC_RPRN,  _______,   _______,   _______ },
     {XXXXXXX,   XXXXXXX, _______, _______, _______, _______,  _______,  _______,  _______,  _______,  _______,   XXXXXXX,   XXXXXXX }
   },
+  // layer 3: arrows and shortcuts
   [3] = { 
-    {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  _______,  _______,  KC_UP,    COLORCAP,  SCRNCAP,   KC_DEL  },
-    {_______,   LEFTSCR, RIGHSCR, COLORCAP,_______, _______,  XXXXXXX,  _______,  KC_LEFT,  KC_DOWN,  KC_RIGHT,  _______,   M(1)    },
+    {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  _______,  _______,  KC_UP,    _______,   _______,   KC_DEL  },
+    {_______,   LEFTSCR, RIGHSCR, COLORCAP,KC_WREF, _______,  XXXXXXX,  _______,  KC_LEFT,  KC_DOWN,  KC_RIGHT,  _______,   M(1)    },
     {_______,   _______, _______, SCRNCAP, _______, _______,  XXXXXXX,  _______,  KC_MUTE,  KC_VOLD,  KC_VOLU,   _______,   _______ },
-    {XXXXXXX,   XXXXXXX, _______, _______, _______, _______,  _______,  _______,  KC_MPRV,  KC_MNXT,  KC_MPLY,   XXXXXXX,   XXXXXXX }
+    {XXXXXXX,   XXXXXXX, _______, _______, _______, MO(4),    _______,  _______,  KC_MPRV,  KC_MNXT,  KC_MPLY,   XXXXXXX,   XXXXXXX }
+  },
+  // layer 4: mouse
+  [4] = {   
+    {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  KC_WH_U,  KC_BTN1,  KC_MS_U,  KC_BTN2,   _______,   _______ },
+    {_______,   _______, KC_ACL0, KC_ACL1, KC_ACL2, _______,  XXXXXXX,  KC_WH_D,  KC_MS_L,  KC_MS_D,  KC_MS_R,   _______,   _______ },
+    {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  _______,  KC_BTN4,  KC_BTN3,  KC_BTN5,   _______,   _______ },
+    {XXXXXXX,   XXXXXXX, _______, _______, _______, TG(4),  _______,  _______,  _______,  _______,  _______,   XXXXXXX,   XXXXXXX }
   },
 };
 
