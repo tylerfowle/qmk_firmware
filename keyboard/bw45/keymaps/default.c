@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [3] = { 
     {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  _______,  _______,  KC_UP,    _______,   _______,   KC_DEL  },
     {_______,   LEFTSCR, RIGHSCR, COLORCAP,KC_WREF, _______,  XXXXXXX,  _______,  KC_LEFT,  KC_DOWN,  KC_RIGHT,  _______,   M(1)    },
-    {_______,   _______, _______, SCRNCAP, _______, _______,  XXXXXXX,  _______,  KC_MUTE,  KC_VOLD,  KC_VOLU,   _______,   _______ },
+    {_______,   _______, _______, SCRNCAP, _______, _______,  XXXXXXX,  _______,  KC_VOLD,  KC_VOLU,  KC_MUTE,   _______,   _______ },
     {XXXXXXX,   XXXXXXX, _______, _______, _______, MO(4),    _______,  _______,  KC_MPRV,  KC_MNXT,  KC_MPLY,   XXXXXXX,   XXXXXXX }
   },
   // layer 4: mouse
@@ -64,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  KC_WH_U,  KC_BTN1,  KC_MS_U,  KC_BTN2,   _______,   _______ },
     {_______,   _______, KC_ACL0, KC_ACL1, KC_ACL2, _______,  XXXXXXX,  KC_WH_D,  KC_MS_L,  KC_MS_D,  KC_MS_R,   _______,   _______ },
     {_______,   _______, _______, _______, _______, _______,  XXXXXXX,  _______,  KC_BTN4,  KC_BTN3,  KC_BTN5,   _______,   _______ },
-    {XXXXXXX,   XXXXXXX, _______, _______, _______, TG(4),  _______,  _______,  _______,  _______,  _______,   XXXXXXX,   XXXXXXX }
+    {XXXXXXX,   XXXXXXX, _______, _______, _______, TG(4),    _______,  _______,  _______,  _______,  _______,   XXXXXXX,   XXXXXXX }
   },
 };
 
