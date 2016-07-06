@@ -13,6 +13,7 @@
 #define LEFTSCR LALT(KC_1)
 #define RIGHSCR LALT(KC_2)
 
+
 // Blank Layer
 
 // layer 1: Description
@@ -22,14 +23,6 @@
 //   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,   _______},
 //   {_______, _______, _______, _______, _______, _SPACE_, __NO___, _______, _______, _______,  _______,   _______}
 // }
-
-float tone_startup[][2] = {
-    ED_NOTE(_E7 ),
-    E__NOTE(_CS7),
-    E__NOTE(_E6 ),
-    E__NOTE(_A6 ),
-    M__NOTE(_CS7, 20)
-};
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -79,9 +72,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 const uint16_t PROGMEM fn_actions[] = {
-
 };
 
+// Audio Stuff
+float tone_startup[][2]    = SONG(STARTUP_SOUND);
+
+void matrix_init_user(void) {
+  startup_user();
+}
+void startup_user() {
+  _delay_ms(20); // gets rid of tick
+  PLAY_NOTE_ARRAY(tone_startup, false, 0);
+}
+
+
+// Macro Stuff
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
@@ -106,3 +111,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
   }
   return MACRO_NONE;
 };
+
+
+
+
+
