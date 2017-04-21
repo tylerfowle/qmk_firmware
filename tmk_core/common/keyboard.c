@@ -14,6 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #include <stdint.h>
 #include "keyboard.h"
 #include "matrix.h"
@@ -29,6 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "sendchar.h"
 #include "eeconfig.h"
 #include "backlight.h"
+#include "action_layer.h"
 #ifdef BOOTMAGIC_ENABLE
 #   include "bootmagic.h"
 #else
@@ -49,6 +51,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef RGBLIGHT_ENABLE
 #   include "rgblight.h"
 #endif
+#ifdef FAUXCLICKY_ENABLE
+#   include "fauxclicky.h"
+#endif
+#ifdef SERIAL_LINK_ENABLE
+#   include "serial_link/system/serial_link.h"
+#endif
+#ifdef VISUALIZER_ENABLE
+#   include "visualizer/visualizer.h"
+#endif
+
+
 
 #ifdef MATRIX_HAS_GHOST
 static bool has_ghost_in_row(uint8_t row)
@@ -98,8 +111,11 @@ void keyboard_init(void) {
 #ifdef RGBLIGHT_ENABLE
     rgblight_init();
 #endif
+#ifdef FAUXCLICKY_ENABLE
+    fauxclicky_init();
+#endif
 #if defined(NKRO_ENABLE) && defined(FORCE_NKRO)
-	keyboard_nkro = true;
+    keymap_config.nkro = 1;
 #endif
 }
 
@@ -167,11 +183,19 @@ MATRIX_LOOP_END:
 #endif
 
 #ifdef SERIAL_MOUSE_ENABLE
-        serial_mouse_task();
+    serial_mouse_task();
 #endif
 
 #ifdef ADB_MOUSE_ENABLE
-        adb_mouse_task();
+    adb_mouse_task();
+#endif
+
+#ifdef SERIAL_LINK_ENABLE
+	serial_link_update();
+#endif
+
+#ifdef VISUALIZER_ENABLE
+    visualizer_update(default_layer_state, layer_state, visualizer_get_mods(), host_keyboard_leds());
 #endif
 
     // update LED
