@@ -23,6 +23,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EE_HANDS
 
 
+// mouse settings
+#define MOUSEKEY_INTERVAL       20
+#define MOUSEKEY_DELAY          0
+#define MOUSEKEY_TIME_TO_MAX    0
+#define MOUSEKEY_MAX_SPEED      2
+#define MOUSEKEY_WHEEL_DELAY    0
+
+// leader key
+#define LEADER_TIMEOUT 300
+
+
 #ifdef SUBPROJECT_rev1
     #include "../../rev1/config.h"
 #endif

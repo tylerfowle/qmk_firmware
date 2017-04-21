@@ -4,11 +4,18 @@
 
 extern keymap_config_t keymap_config;
 
-//
+// leader key
+LEADER_EXTERNS();
+
+
+
+
+// for readability
 #define __NO___ KC_NO
 #define _______ KC_TRNS
 #define _SPACE_ KC_SPC
 
+// shortcuts
 #define TAB_FN LT(4,KC_TAB)
 #define SCRNCAP LGUI(LSFT(KC_4))
 #define COLORCAP LCTL(LALT(LGUI(KC_C)))
@@ -22,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     M(0),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,    KC_BSPC, \
     TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN, KC_ENT, \
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, \
-    DF(1),   KC_LCTL, KC_LALT, KC_LGUI, MO(3),   _SPACE_, _SPACE_, MO(2),   KC_QUOT, KC_BSLS,  _______, TG(5)
+    DF(1),   KC_LCTL, KC_LALT, KC_LGUI, MO(3),   _SPACE_, _SPACE_, MO(2),   KC_QUOT, KC_BSLS,  KC_LEAD, TG(5)
   ),
 
   [1] = KEYMAP( \
@@ -86,3 +93,30 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
   }
   return MACRO_NONE;
 };
+
+
+
+
+
+// leader key dictionary
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+
+    SEQ_ONE_KEY(KC_F) {
+      register_code(KC_S);
+      unregister_code(KC_S);
+    }
+    SEQ_TWO_KEYS(KC_A, KC_S) {
+      register_code(KC_H);
+      unregister_code(KC_H);
+    }
+    SEQ_THREE_KEYS(KC_A, KC_S, KC_D) {
+      register_code(KC_LGUI);
+      register_code(KC_S);
+      unregister_code(KC_S);
+      unregister_code(KC_LGUI);
+    }
+  }
+}
