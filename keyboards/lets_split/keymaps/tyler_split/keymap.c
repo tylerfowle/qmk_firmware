@@ -1,6 +1,7 @@
 #include "lets_split.h"
 #include "action_layer.h"
 #include "eeconfig.h"
+#include "version.h"
 
 extern keymap_config_t keymap_config;
 
@@ -11,7 +12,7 @@ LEADER_EXTERNS();
 
 
 // for readability
-#define __NO___ KC_NO
+#define XXXXXXX KC_NO
 #define _______ KC_TRNS
 #define _SPACE_ KC_SPC
 
@@ -43,28 +44,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    _______, _______, _______, _______, _______,  _______,  KC_DEL , \
     _______, KC_5,    KC_6,    KC_7,    KC_8,    _______, _______, _______, _______, _______,  _______,  _______, \
     _______, KC_9,    KC_0,    KC_MINS, KC_EQL,  _______, _______, _______, _______, _______,  _______,  _______, \
-    DF(3),    _______, _______, _______, _______, _SPACE_, _SPACE_, _______, _______, _______,  _______,  _______
+    DF(3),   _______, _______, _______, _______, _SPACE_, _SPACE_, _______, _______, _______,  _______,  _______
   ),
 
   [3] = KEYMAP( \
     KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______, _______, KC_LBRC, KC_RBRC, _______,  _______,  KC_BSPC, \
     _______, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______, _______, KC_LCBR, KC_RCBR, KC_MINS,  KC_UNDS,  _______, \
     _______, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______, _______, KC_LPRN, KC_RPRN, _______,  _______,  _______, \
-    DF(4),    _______, _______, _______, _______, _SPACE_, _SPACE_, _______, _______, _______,  _______,  _______
+    DF(4),   _______, _______, _______, _______, _SPACE_, _SPACE_, _______, _______, _______,  _______,  _______
   ),
 
   [4] = KEYMAP( \
     _______, _______, _______, _______, _______, _______, _______, _______, KC_UP,   _______,  _______,   KC_DEL , \
     _______, LEFTSCR, RIGHSCR,COLORCAP, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______,   M(1)   , \
     _______, _______, _______, SCRNCAP, _______, _______, _______, KC_VOLD, KC_VOLU, KC_MUTE,  _______,   _______, \
-    DF(5),    _______, _______, _______, _______, _SPACE_, _SPACE_, KC_MPRV, KC_MNXT, KC_MPLY,  _______,   RESET
+    DF(5),   _______, _______, _______, _______, _SPACE_, _SPACE_, KC_MPRV, KC_MNXT, KC_MPLY,  _______,   RESET
   ),
 
   [5] = KEYMAP( \
     _______, _______, _______, _______, _______, _______, KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2,  _______,   RESET, \
     _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R,  _______,   _______, \
     _______, _______, _______, _______, _______, _______, _______, KC_BTN4, KC_BTN3, KC_BTN5,  _______,   _______, \
-    DF(0),    _______, _______, _______, _______, _SPACE_, _SPACE_, _______, _______, _______,  _______,   _______
+    DF(0),   _______, _______, _______, _______, _SPACE_, _SPACE_, _______, _______, _______,  _______,   _______
+  ),
+
+  [6] = KEYMAP( \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______, \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______, \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______, \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______
   )
 
 };
@@ -104,19 +112,40 @@ void matrix_scan_user(void) {
     leading = false;
     leader_end();
 
-    SEQ_ONE_KEY(KC_F) {
-      register_code(KC_S);
-      unregister_code(KC_S);
+    // random 10 character hash
+    SEQ_ONE_KEY (KC_R) {
+      tap_random_base64();
+      tap_random_base64();
+      tap_random_base64();
+      tap_random_base64();
+      tap_random_base64();
+      tap_random_base64();
+      tap_random_base64();
+      tap_random_base64();
+      tap_random_base64();
+      tap_random_base64();
     }
-    SEQ_TWO_KEYS(KC_A, KC_S) {
-      register_code(KC_H);
-      unregister_code(KC_H);
+
+    // version
+    SEQ_ONE_KEY (KC_V) {
+      SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
     }
-    SEQ_THREE_KEYS(KC_A, KC_S, KC_D) {
-      register_code(KC_LGUI);
-      register_code(KC_S);
-      unregister_code(KC_S);
-      unregister_code(KC_LGUI);
+
+    // function
+    SEQ_ONE_KEY (KC_F) {
+      SEND_STRING ( "function(){" );
+      register_code ( KC_ENT );
+      register_code ( KC_DOWN );
+      register_code ( KC_RIGHT );
+      SEND_STRING ( ");" );
+      register_code ( KC_UP );
+      SEND_STRING ( "  " );
+
+      unregister_code ( KC_ENT );
+      unregister_code ( KC_DOWN );
+      unregister_code ( KC_RIGHT );
+      unregister_code ( KC_UP );
     }
+
   }
 }
