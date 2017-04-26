@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [4] = KEYMAP( \
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_UP,   _______,  _______,   KC_DEL , \
+    _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_UP,   KC_END,   _______,   KC_DEL , \
     _______, LEFTSCR, RIGHSCR,COLORCAP, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______,   M(1)   , \
     _______, _______, _______, SCRNCAP, _______, _______, _______, KC_VOLD, KC_VOLU, KC_MUTE,  _______,   _______, \
     DF(5),   _______, _______, _______, _______, _SPACE_, _SPACE_, KC_MPRV, KC_MNXT, KC_MPLY,  _______,   RESET
@@ -145,6 +145,14 @@ void matrix_scan_user(void) {
       unregister_code ( KC_DOWN );
       unregister_code ( KC_RIGHT );
       unregister_code ( KC_UP );
+    }
+
+    SEQ_ONE_KEY (KC_T) {
+      SEND_STRING ( "$(this)" );
+    }
+
+    SEQ_ONE_KEY (KC_E) {
+      SEND_STRING ( ".each()" );
     }
 
   }
