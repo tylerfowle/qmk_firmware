@@ -33,6 +33,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // leader key
 #define LEADER_TIMEOUT 300
 
+// tap dance time
+#define TAPPING_TERM 200
+
 
 #ifdef SUBPROJECT_rev1
     #include "../../rev1/config.h"

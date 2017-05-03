@@ -8,14 +8,16 @@ extern keymap_config_t keymap_config;
 // leader key
 LEADER_EXTERNS();
 
-
-
+enum {
+  TD_CONTROL_HYPER = 0
+};
 
 // for readability
 #define XXXXXXX KC_NO
 #define _______ KC_TRNS
 #define _SPACE_ KC_SPC
 #define HYPRSPC MT(MOD_HYPR, KC_SPC)
+#define CTRLTAP TD(TD_CONTROL_HYPER)
 
 // shortcuts
 #define TAB_FN LT(4,KC_TAB)
@@ -25,13 +27,14 @@ LEADER_EXTERNS();
 #define LEFTSCR LALT(KC_1)
 #define RIGHSCR LALT(KC_2)
 
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [0] = KEYMAP( \
     M(0),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,    KC_BSPC, \
     TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN, KC_ENT, \
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, \
-    DF(1),   KC_LCTL, KC_LALT, KC_LGUI, MO(3),   HYPRSPC, _SPACE_, MO(2),   KC_QUOT, KC_BSLS,  KC_LEAD, TG(5)
+    DF(1),   KC_LCTL, KC_LALT, KC_LGUI, MO(3),   CTRLTAP, _SPACE_, MO(2),   KC_QUOT, KC_BSLS,  KC_LEAD, TG(5)
   ),
 
   [1] = KEYMAP( \
@@ -79,8 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
   switch(id) {
     case 0: {
       static uint8_t code;
@@ -104,6 +106,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 };
 
 
+
+//Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+  //Tap once for Esc, twice for Caps Lock
+  [TD_CONTROL_HYPER]  = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_HYPR)
+};
 
 
 
