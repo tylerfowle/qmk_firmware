@@ -30,10 +30,13 @@ enum custom_keycodes {
 #define XXXXXXX KC_NO
 #define _______ KC_TRNS
 #define _SPACE_ KC_SPC
+
 #define HYPRSPC MT(MOD_HYPR, KC_SPC)
+#define L_LAYER LT(3, KC_GRV)
+#define R_LAYER LT(2, KC_QUOT)
+#define TAB_FN LT(4,KC_TAB)
 
 // shortcuts
-#define TAB_FN LT(4,KC_TAB)
 #define SCRNCAP LGUI(LSFT(KC_4))
 #define COLORCAP LCTL(LALT(LGUI(KC_C)))
 
@@ -46,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       M(0),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,    KC_BSPC, \
       TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN, KC_ENT, \
       KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, \
-      KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, MO(3),   HYPRSPC, _SPACE_, MO(2),   KC_QUOT, KC_BSLS,  KC_LEAD, TG(5)
+      KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, L_LAYER, HYPRSPC, _SPACE_, R_LAYER, KC_DQUO, KC_BSLS,  KC_LEAD, TG(5)
       ),
 
   [_WIN] = KEYMAP( \
@@ -64,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ),
 
   [_SYM] = KEYMAP( \
-      _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______, _______, KC_LBRC, KC_RBRC, _______,  _______,  KC_BSPC, \
+      KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______, _______, KC_LBRC, KC_RBRC, _______,  _______,  KC_BSPC, \
       _______, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______, _______, KC_LCBR, KC_RCBR, KC_MINS,  KC_UNDS,  _______, \
       _______, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______, _______, KC_LPRN, KC_RPRN, _______,  _______,  _______, \
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______
@@ -138,6 +141,12 @@ void matrix_scan_user(void) {
     // version
     SEQ_ONE_KEY (KC_V) {
       SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+    }
+
+    // print screen
+    SEQ_ONE_KEY (KC_P) {
+      register_code(KC_PSCR);
+      unregister_code(KC_PSCR);
     }
 
   }
