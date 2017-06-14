@@ -14,6 +14,7 @@ LEADER_EXTERNS();
 #define _SYM 3
 #define _ARROW 4
 #define _MOUSE 5
+#define _EXTRA 6
 
 
 enum custom_keycodes {
@@ -22,7 +23,8 @@ enum custom_keycodes {
   NUM,
   SYM,
   ARROW,
-  MOUSE
+  MOUSE,
+  EXTRA
 };
 
 
@@ -49,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       M(0),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,    KC_BSPC, \
       TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN, KC_ENT, \
       KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, \
-      KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, MO(3),   HYPRSPC, _SPACE_, MO(2),   KC_DQUO, KC_BSLS,  KC_LEAD, TG(5)
+      KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, MO(3),   HYPRSPC, _SPACE_, MO(2),   MO(6),   KC_BSLS,  KC_LEAD, TG(5)
       ),
 
   [_WIN] = KEYMAP( \
@@ -84,7 +86,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______, _______, _______, KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2,  _______,   RESET, \
       _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R,  _______,   _______, \
       _______, _______, _______, _______, _______, _______, _______, KC_BTN4, KC_BTN3, KC_BTN5,  _______,   _______, \
-      MAC,     WIN,     NUM,     SYM,     ARROW,  _______, _______, _______, _______, _______,  _______,   _______
+      MAC,     WIN,     NUM,     SYM,     ARROW,   _______, _______, _______, _______, _______,  _______,   _______
+      ),
+
+  [_EXTRA] = KEYMAP( \
+      _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, _______, _______, _______, _______,  _______,   _______, \
+      _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, _______, _______, _______, _______,  _______,   _______, \
+      _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, _______, _______, _______,  _______,   _______, \
+      _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  _______, _______, _______, _______, _______,  _______,   _______
       )
 
 };
