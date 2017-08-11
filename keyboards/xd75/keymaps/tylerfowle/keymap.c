@@ -98,10 +98,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* 5 */
   [_MOUSE] = {
-    { _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET   },
-    { _______, _______, _______, _______, _______, _______, _______, RGB_VAI, RGB_VAD, KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______ },
-    { _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______, RGB_SAI, RGB_SAD, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______ },
-    { _______, _______, _______, _______, _______, _______, _______, RGB_HUI, RGB_HUD, _______, KC_BTN4, KC_BTN3, KC_BTN5, _______, _______ },
+    { _______, _______, _______, _______, _______, _______, M(6),    _______, _______, _______, _______, _______, _______, _______, RESET   },
+    { _______, _______, _______, _______, _______, _______, M(5),    RGB_VAI, RGB_VAD, KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______ },
+    { _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, M(4),    RGB_SAI, RGB_SAD, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______ },
+    { _______, _______, _______, _______, _______, _______, M(3),    RGB_HUI, RGB_HUD, _______, KC_BTN4, KC_BTN3, KC_BTN5, _______, _______ },
     { MAC,     WIN,     NUM,     SYM,     ARROW,   EXT,     M(2),    RGB_TOG, RGB_MOD, _______, _______, _______, _______, _______, _______ },
   },
 
@@ -136,9 +136,42 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
               return MACRO( I(5), D(LSFT), T(SCLN), U(LSFT), T(W), T(Q), T(ENT), END  );
             }
             break;
+
+            // changing rgblight modes
+
+            // solid color
     case 2:
             if (record->event.pressed) {
-              rgblight_mode(0);
+              rgblight_enable();
+              rgblight_mode(1);
+            }
+            break;
+            // rainbow mood
+    case 3:
+            if (record->event.pressed) {
+              rgblight_enable();
+              rgblight_mode(6);
+            }
+            break;
+            // rainbow swirl
+    case 4:
+            if (record->event.pressed) {
+              rgblight_enable();
+              rgblight_mode(9);
+            }
+            break;
+            // snake
+    case 5:
+            if (record->event.pressed) {
+              rgblight_enable();
+              rgblight_mode(15);
+            }
+            break;
+            // knight
+    case 6:
+            if (record->event.pressed) {
+              rgblight_enable();
+              rgblight_mode(21);
             }
             break;
 
