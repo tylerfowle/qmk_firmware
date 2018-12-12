@@ -1,12 +1,4 @@
-#include "lets_split.h"
-#include "action_layer.h"
-#include "eeconfig.h"
-#include "version.h"
-
-extern keymap_config_t keymap_config;
-
-// leader key
-LEADER_EXTERNS();
+#include QMK_KEYBOARD_H
 
 #define _MAC  0
 #define _WIN  1
@@ -15,7 +7,7 @@ LEADER_EXTERNS();
 #define _ARROW 4
 #define _MOUSE 5
 #define _EXTRA 6
-
+#define _MIDI 7
 
 enum custom_keycodes {
   MAC = SAFE_RANGE,
@@ -24,7 +16,8 @@ enum custom_keycodes {
   SYM,
   ARROW,
   MOUSE,
-  EXTRA
+  EXTRA,
+  MIDI
 };
 
 
@@ -47,53 +40,60 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [_MAC] = KEYMAP( \
+  [_MAC] = LAYOUT_ortho_4x12( \
       M(0),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,    KC_BSPC, \
       TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN, KC_ENT, \
       KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, \
-      KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, MO(3),   HYPRSPC, _SPACE_, MO(2),   MO(6),   KC_BSLS,  KC_LEAD, TG(5)
+      KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, MO(3),   HYPRSPC, _SPACE_, MO(2),   MO(6),   KC_BSLS,  KC_PIPE, TG(5)
       ),
 
-  [_WIN] = KEYMAP( \
+  [_WIN] = LAYOUT_ortho_4x12( \
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, \
       _______, KC_LALT, KC_LGUI, KC_LCTL, _______, _______, _______, _______, _______, _______,  _______, _______
       ),
 
-  [_NUM] = KEYMAP( \
+  [_NUM] = LAYOUT_ortho_4x12( \
       KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    _______, _______, _______, _______, _______,  _______, KC_DEL , \
       _______, KC_5,    KC_6,    KC_7,    KC_8,    _______, _______, KC_QUOT, KC_DQUO, KC_GRV,   _______, _______, \
       _______, KC_9,    KC_0,    KC_MINS, KC_EQL,  _______, _______, _______, _______, _______,  _______, _______, \
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______
       ),
 
-  [_SYM] = KEYMAP( \
+  [_SYM] = LAYOUT_ortho_4x12( \
       KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______, _______, KC_LBRC, KC_RBRC, _______,  _______, KC_BSPC, \
       _______, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______, _______, KC_LCBR, KC_RCBR, KC_MINS,  KC_UNDS, _______, \
       _______, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______, _______, KC_LPRN, KC_RPRN, _______,  _______, _______, \
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______
       ),
 
-  [_ARROW] = KEYMAP( \
+  [_ARROW] = LAYOUT_ortho_4x12( \
       _______, _______, _______, _______, _______, _______, _______, KC_HOME, _______, KC_END,   _______, KC_DEL , \
       _______, LEFTSCR, RIGHSCR,COLORCAP, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, M(1)   , \
       _______, _______, _______, SCRNCAP, _______, _______, _______, _______, KC_VOLD, KC_VOLU,  KC_MUTE, _______, \
       _______, _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MNXT,  KC_MPLY, _______
       ),
 
-  [_MOUSE] = KEYMAP( \
+  [_MOUSE] = LAYOUT_ortho_4x12( \
       _______, _______, _______, _______, _______, _______, KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2,  _______, RESET, \
       _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R,  _______, _______, \
       _______, _______, _______, _______, _______, _______, _______, KC_BTN4, KC_BTN3, KC_BTN5,  _______, _______, \
-      MAC,     WIN,     NUM,     SYM,     ARROW,   _______, _______, _______, _______, _______,  _______, _______
+      MAC,     WIN,     NUM,     SYM,     ARROW,   MIDI,    _______, _______, _______, _______,  _______, _______
       ),
 
-  [_EXTRA] = KEYMAP( \
+  [_EXTRA] = LAYOUT_ortho_4x12( \
       _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, _______, _______, _______, _______,  _______, _______, \
       _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, _______, _______, _______, _______,  _______, _______, \
       _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, _______, _______, _______,  _______, _______, \
       _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  _______, _______, _______, _______, _______,  _______, _______
+      ),
+
+  [_MIDI] = LAYOUT_ortho_4x12( \
+      MI_CHU,  _______, MI_Cs,   MI_Ds,   _______, MI_Fs,   MI_Gs,    MI_As,   _______,  MI_Cs_1,  MI_Ds_1, _______, \
+      MI_MOD,  MI_C,    MI_D,    MI_E,    MI_F,    MI_G,    MI_A,     MI_B,    MI_C_1,   MI_D_1,   MI_E_1,  MI_F_1,  \
+      MI_SUS, _______, _______, _______, _______, _______, _______,   _______, MI_OCTD,  MI_OCTU,  _______, MI_SUS,  \
+      MI_MOD, _______, _______, _______, _______, _______, MI_ALLOFF, _______, MI_TRNSD, MI_TRNSU, MI_TRNS_0, _______
       )
 
 };
@@ -122,45 +122,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
   }
   return MACRO_NONE;
 };
-
-
-
-
-
-// leader key dictionary
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
-
-    // random 10 character hash
-    SEQ_ONE_KEY (KC_R) {
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-    }
-
-    // version
-    SEQ_ONE_KEY (KC_V) {
-      SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-    }
-
-    // print screen
-    SEQ_ONE_KEY (KC_P) {
-      register_code(KC_PSCR);
-      unregister_code(KC_PSCR);
-    }
-
-  }
-}
-
 
 void persistant_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
