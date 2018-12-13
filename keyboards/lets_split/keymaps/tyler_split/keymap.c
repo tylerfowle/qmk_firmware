@@ -5,9 +5,9 @@
 #define _NUM 2
 #define _SYM 3
 #define _ARROW 4
-#define _MOUSE 5
-#define _EXTRA 6
-#define _MIDI 7
+#define _EXTRA 5
+#define _MIDI 6
+#define _MOUSE 7
 
 enum custom_keycodes {
   MAC = SAFE_RANGE,
@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       M(0),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,    KC_BSPC, \
       TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN, KC_ENT, \
       KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT, \
-      KC_LCTL, KC_LCTL, KC_LGUI, KC_LALT, MO(3),   HYPRSPC, _SPACE_, MO(2),   MO(6),   KC_BSLS,  KC_PIPE, TG(5)
+      KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, MO(_SYM),   HYPRSPC, _SPACE_, MO(_NUM),   MO(_EXTRA),   KC_BSLS,  KC_PIPE, TG(_MOUSE)
       ),
 
   [_WIN] = LAYOUT_ortho_4x12( \
@@ -75,11 +75,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MNXT,  KC_MPLY, _______
       ),
 
-  [_MOUSE] = LAYOUT_ortho_4x12( \
-      _______, _______, _______, _______, _______, _______, KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2,  _______, RESET, \
-      _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R,  _______, _______, \
-      _______, _______, _______, _______, _______, _______, _______, KC_BTN4, KC_BTN3, KC_BTN5,  _______, _______, \
-      MAC,     WIN,     NUM,     SYM,     ARROW,   MIDI,    _______, _______, _______, _______,  _______, _______
+  [_MIDI] = LAYOUT_ortho_4x12( \
+      MI_CHU,  _______, MI_Cs,   MI_Ds,   _______, MI_Fs,   MI_Gs,    MI_As,   _______,  MI_Cs_1,  MI_Ds_1, TG(_MIDI), \
+      MI_MOD,  MI_C,    MI_D,    MI_E,    MI_F,    MI_G,    MI_A,     MI_B,    MI_C_1,   MI_D_1,   MI_E_1,  MI_F_1,  \
+      MI_SUS, _______, _______, _______, _______, _______, _______,   _______, MI_OCTD,  MI_OCTU,  _______, MI_SUS,  \
+      MI_MOD, _______, _______, _______, _______, _______, MI_ALLOFF, _______, MI_TRNSD, MI_TRNSU, MI_TRNS_0, _______
       ),
 
   [_EXTRA] = LAYOUT_ortho_4x12( \
@@ -89,12 +89,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  _______, _______, _______, _______, _______,  _______, _______
       ),
 
-  [_MIDI] = LAYOUT_ortho_4x12( \
-      MI_CHU,  _______, MI_Cs,   MI_Ds,   _______, MI_Fs,   MI_Gs,    MI_As,   _______,  MI_Cs_1,  MI_Ds_1, _______, \
-      MI_MOD,  MI_C,    MI_D,    MI_E,    MI_F,    MI_G,    MI_A,     MI_B,    MI_C_1,   MI_D_1,   MI_E_1,  MI_F_1,  \
-      MI_SUS, _______, _______, _______, _______, _______, _______,   _______, MI_OCTD,  MI_OCTU,  _______, MI_SUS,  \
-      MI_MOD, _______, _______, _______, _______, _______, MI_ALLOFF, _______, MI_TRNSD, MI_TRNSU, MI_TRNS_0, _______
+  [_MOUSE] = LAYOUT_ortho_4x12( \
+      _______, _______, _______, _______, _______, _______, KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2,  _______, RESET, \
+      _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R,  _______, _______, \
+      _______, _______, _______, _______, _______, _______, _______, KC_BTN4, KC_BTN3, KC_BTN5,  _______, _______, \
+      MAC,     WIN,     NUM,     SYM,     ARROW,   TG(_MIDI),    _______, _______, _______, _______,  _______, _______
       )
+
 
 };
 
@@ -167,7 +168,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-
+    case MIDI:
+      if (record->event.pressed) {
+        persistant_default_layer_set(1UL<< _MIDI);
+      }
+      return false;
+      break;
   }
   return true;
 }
