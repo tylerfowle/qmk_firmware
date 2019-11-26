@@ -1,6 +1,4 @@
 #include QMK_KEYBOARD_H
-#include "action_layer.h"
-#include "eeconfig.h"
 
 #define _MAC  0
 #define _WIN  1
