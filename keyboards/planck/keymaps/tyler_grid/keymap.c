@@ -5,16 +5,13 @@
 #include "audio.h"
 #include "version.h"
 
-
-// leader key
-LEADER_EXTERNS();
-
 #define _MAC  0
 #define _WIN  1
 #define _NUM 2
 #define _SYM 3
 #define _ARROW 4
-#define _MOUSE 5
+#define _GAME 5
+#define _MOUSE 6
 
 
 enum custom_keycodes {
@@ -23,8 +20,8 @@ enum custom_keycodes {
   NUM,
   SYM,
   ARROW,
-  MOUSE,
-  GAME
+  GAME,
+  MOUSE
 };
 
 
@@ -41,24 +38,13 @@ enum custom_keycodes {
 
 #define HYPRSPC MT(MOD_HYPR, KC_SPC)
 
-// Blank Layer
-
-// layer 1: Description
-// [1] = {
-//   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,   _______},
-//   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,   _______},
-//   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,   _______},
-//   {_______, _______, _______, _______, _______, _SPACE_, __NO___, _______, _______, _______,  _______,   _______}
-// }
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // layer 1: base mac
   [0] = {
     {M(6),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,    KC_BSPC},
     {TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN, KC_ENT},
     {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH, KC_RSFT},
-    {KC_RCTL, KC_LCTL, KC_LALT, KC_LGUI, MO(3),   HYPRSPC, _SPACE_, MO(2),   KC_QUOT, KC_BSLS,  KC_LEAD, TG(5)}
+    {KC_RCTL, KC_LCTL, KC_LALT, KC_LGUI, MO(3),   HYPRSPC, _SPACE_, MO(2),   KC_QUOT, KC_BSLS,  TG(5), TG(6)}
   },
   // layer 1: base windows
   [1] = {
@@ -88,19 +74,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     {_______, _______, _______, SCRNCAP, _______, _______, _______, KC_VOLD, KC_VOLU, KC_MUTE,  _______, _______},
     {_______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_MNXT, KC_MPLY,  _______, _______}
   },
-  // layer 5: mouse
+  // layer 5: game
   [5] = {
+    {KC_ESC,  KC_C,    KC_P,    KC_MINS, KC_P1,   KC_P2,   KC_P3,   KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
+    {KC_M,    KC_I,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT},
+    {KC_Z,    KC_COMM, KC_6,    KC_7,    KC_8,    KC_9,    KC_EQL,  KC_M,    KC_COMM, KC_DOT,  KC_SLSH, _______},
+    {KC_LCTL, KC_X,    KC_0,    KC_GRV,  _SPACE_, KC_LSFT, KC_W,    KC_LALT, KC_QUOT, KC_BSLS, _______, _______}
+  },
+  // layer 6: mouse
+  [6] = {
     {_______, _______, _______, _______, _______, _______, KC_WH_U, KC_BTN1, KC_MS_U, KC_BTN2,  _______, RESET},
     {_______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_WH_D, KC_MS_L, KC_MS_D, KC_MS_R,  _______, _______},
     {_______, _______, _______, _______, _______, _______, _______, KC_BTN4, KC_BTN3, KC_BTN5,  _______, _______},
-    {MAC,     WIN,     NUM,     SYM,     ARROW,   GAME,    _______, _______, _______, _______,  _______, _______}
-  },
-  // layer 6: gamepad
-  [6] = {
-    {KC_ESC,  KC_C,    KC_P,    KC_MINS, KC_P1,   KC_P2,   KC_P3,  _______, _______, _______, _______, _______},
-    {KC_M,    KC_I,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,   _______, _______, _______, _______, _______},
-    {KC_Z,    KC_COMM, KC_6,    KC_7,    KC_8,    KC_9,    KC_EQL, _______, _______, _______, _______, _______},
-    {KC_LCTL, KC_X,    KC_0,    KC_GRV,  _SPACE_, KC_LSFT, KC_W,   KC_LALT, _______, _______, _______, _______}
+    {MAC,     WIN,     NUM,     SYM,     ARROW,   _______, _______, _______, _______, _______,  GAME,    _______}
   }
 };
 
@@ -168,40 +154,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
 
 
 
-
-
-
-
-
-// leader key dictionary
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
-
-    // random 10 character hash
-    SEQ_ONE_KEY (KC_R) {
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-      tap_random_base64();
-    }
-
-    // version
-    SEQ_ONE_KEY (KC_V) {
-      SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-    }
-
-  }
-}
-
-
 /* float tone_mac[][2]      = SONG(QWERTY_SOUND); */
 /* float tone_win[][2]      = SONG(COLEMAK_SOUND); */
 /* float tone_mouse[][2]    = SONG(DVORAK_SOUND); */
@@ -240,7 +192,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+
     case ARROW:
+      if (record->event.pressed) {
+        persistant_default_layer_set(1UL<<_ARROW);
+      }
+      return false;
+      break;
+    case GAME:
       if (record->event.pressed) {
         persistant_default_layer_set(1UL<<_ARROW);
       }
