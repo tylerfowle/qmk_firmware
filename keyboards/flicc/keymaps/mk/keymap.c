@@ -5,26 +5,34 @@
 #include "action_layer.h"
 #include "eeconfig.h"
 
-//CHANGE THIS
-/* char arrow_keys[4] = {KC_UP, KC_LEFT, KC_DOWN, KC_RIGHT}; // up, left, down, right */
-char arrow_keys[4] = {KC_W, KC_A, KC_S, KC_D}; // up, left, down, right
+// CHANGE THIS
+// -------------------
 
-static uint8_t joystickMode = 1;
-/* static uint8_t joystick_modes = 2; // amount of modes */
-static int actuation = 256; // actuation point for arrows (0-511)
+// joystick mode
+static int joystickMode = 1;  // 0=analog, 1=keys
+#define joystick_modes 2 // amount of modes
 
-enum my_keycodes {
-    JSMODE = SAFE_RANGE,
+// joystick keys mode
+static int joystickKeysMode = 2;  // arrows, wasd, mods
+#define joystick_keys_modes 3 // amount of key modes
+
+// joystick direction -> up, left, down, right
+static char joykeys[joystick_keys_modes][4] = {
+    {KC_UP, KC_LEFT, KC_DOWN, KC_RIGHT},
+    {KC_W, KC_A, KC_S, KC_D},
+    {KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT},
 };
+// -------------------
 
+static int actuation = 256; // actuation point for arrows (0-511)
 bool arrows[4];
-
 
 // layer leds
 #define LED1 D7 // pin 6
 #define LED2 C6 // pin 5
 #define LED3 D0 // pin 3
 
+// runs on startup
 void keyboard_pre_init_user(void) {
     // set pins as output
     setPinOutput(LED1);
@@ -46,16 +54,21 @@ void keyboard_pre_init_user(void) {
 #define _LAYERS 6
 
 enum custom_keycodes {
+    // layers keys
     GAME = SAFE_RANGE,
     MAC,
     WIN,
     NUM,
     SYM,
     ARROW,
-    LAYERS
+    LAYERS,
+    // custom keys
+    JSMODE,
+    JSKEYS,
 };
 
 // for readability
+// -------------------
 #define XXXXXXX KC_NO
 #define _______ KC_TRNS
 #define _SPACE_ KC_SPC
@@ -68,8 +81,12 @@ enum custom_keycodes {
 // mod taps
 #define HYPRSPC MT(MOD_HYPR, KC_SPC)
 
-// change what mode the joystick is in
+// keycode to change what mode the joystick is in
 // JSMODE
+
+// keycode to change what keys the joystick is using
+// JSKEYS
+// -------------------
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -79,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             TAB_FN,  KC_M,    KC_Q,    KC_F,    KC_E,   KC_EQL,
             I_FN,    KC_1,    KC_2,    KC_3,    KC_4,   KC_5,
             TO(1),   KC_COMM, KC_6,    KC_7,    KC_8,   KC_9,   KC_0,
-            KC_LCTL, KC_LALT, KC_LGUI, OSL(_LAYERS), KC_SPC
+            KC_LCTL, KC_LALT, KC_LGUI, JSMODE,  KC_SPC
             ),
 
     // 1
@@ -88,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,
             TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,   KC_G,
             TO(2),   KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,  KC_B,
-            KC_LCTL, KC_LALT, KC_LGUI, _______, HYPRSPC
+            KC_LCTL, KC_LALT, KC_LGUI, JSKEYS,  HYPRSPC
             ),
 
     // 2
@@ -136,10 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______, _______, _______, _______, _______
             ),
 
-
 };
-
-
 
 
 
@@ -160,38 +174,38 @@ void joystick_task(){
             joystick_status.status |= JS_UPDATED;
             send_joystick_packet(&joystick_status);
             break;
-        case 1: // arrows
+        case 1: // keys
             if (!arrows[0] && analogReadPin(F5) - 512 > actuation){
                 arrows[0] = true;
-                register_code16(arrow_keys[1]);
+                register_code16(joykeys[joystickKeysMode][1]);
             }
             else if (arrows[0] &&  analogReadPin(F5) - 512 < actuation){
                 arrows[0] = false;
-                unregister_code16(arrow_keys[1]);
+                unregister_code16(joykeys[joystickKeysMode][1]);
             }
             if (!arrows[1] && analogReadPin(F5) - 512 < -actuation){
                 arrows[1] = true;
-                register_code16(arrow_keys[3]);
+                register_code16(joykeys[joystickKeysMode][3]);
             }
             else if (arrows[1] && analogReadPin(F5) - 512 > -actuation){
                 arrows[1] = false;
-                unregister_code16(arrow_keys[3]);
+                unregister_code16(joykeys[joystickKeysMode][3]);
             }
             if (!arrows[2] && analogReadPin(F4) - 512 > actuation){
                 arrows[2] = true;
-                register_code16(arrow_keys[2]);
+                register_code16(joykeys[joystickKeysMode][2]);
             }
             else if (arrows[2] &&  analogReadPin(F4) - 512 < actuation){
                 arrows[2] = false;
-                unregister_code16(arrow_keys[2]);
+                unregister_code16(joykeys[joystickKeysMode][2]);
             }
             if (!arrows[3] && analogReadPin(F4) - 512 < -actuation){
                 arrows[3] = true;
-                register_code16(arrow_keys[0]);
+                register_code16(joykeys[joystickKeysMode][0]);
             }
             else if (arrows[3] && analogReadPin(F4) - 512 > -actuation){
                 arrows[3] = false;
-                unregister_code16(arrow_keys[0]);
+                unregister_code16(joykeys[joystickKeysMode][0]);
             }
             break;
 
@@ -205,8 +219,6 @@ void joystick_task(){
               break;*/
     }
 }
-
-
 
 // MACROS
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -230,26 +242,33 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     return MACRO_NONE;
 };
 
-
-
-
+// this controls semi perminent layer changes
 void persistant_default_layer_set(uint16_t default_layer) {
-  eeconfig_update_default_layer(default_layer);
-  default_layer_set(default_layer);
+    eeconfig_update_default_layer(default_layer);
+    default_layer_set(default_layer);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
 
-        /* case JSMODE: */
-        /*     if (record->event.pressed) { */
-        /*         joystickMode++; */
-        /*         if (joystickMode == joystick_modes){ */
-        /*             joystickMode = 0; */
-        /*         } */
-        /*     } */
-        /*     break; */
+        case JSMODE:
+            if (record->event.pressed) {
+                joystickMode++;
+                if (joystickMode == joystick_modes){
+                    joystickMode = 0;
+                }
+            }
+            break;
+
+        case JSKEYS:
+            if (record->event.pressed) {
+                joystickKeysMode++;
+                if (joystickKeysMode == joystick_keys_modes){
+                    joystickKeysMode = 0;
+                }
+            }
+            break;
 
         // this controls semi perminent layer changes
         case GAME:      if (record->event.pressed) { persistant_default_layer_set(1UL<<_GAME); }      return false; break;
@@ -265,12 +284,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
-
-
-
-
 // from sketch
+// -------------------
 // LED configuration for each layout 1=on 0=off
+
 /* byte layerLEDs[layers][3] = { */
 /* {1, 0, 0}, */
 /* {0, 1, 0}, */
@@ -278,11 +295,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /* {0, 0, 0} */
 /* }; */
 
-// from sketch
 // analogWrite(LED1, brightness * layerLEDs[layer][0]);
 // analogWrite(LED2, brightness * layerLEDs[layer][1]);
 // analogWrite(LED3, brightness * layerLEDs[layer][2]);
+// -------------------
 
+
+// manual control of leds
+// might come back to this
+// -------------------
 
 /* void set_layer_led(int layerId) { */
 /*     writePin(LED1, 0); */
@@ -301,10 +322,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /*     } */
 /* } */
 
+/* void led_set_layer(int layer) { */
+/*     switch(layer) { */
+/*         case 0: */
+/*             set_layer_led(0); // Turn on only the first layer indicator */
+/*             break; */
+/*         case 1: */
+/*             set_layer_led(1); // Turn on only the second layer indicator */
+/*             break; */
+/*         case 2: */
+/*             set_layer_led(2); // Turn on only the third layer indicator */
+/*             break; */
+/*     } */
+/* } */
 
-//Set a led based on the layer
+// -------------------
+
+// Automatically sets leds based on the layer
 uint32_t layer_state_set_user(uint32_t state) {
 
+    // first turn all leds off
     writePin(LED1, 0);
     writePin(LED2, 0);
     writePin(LED3, 0);
@@ -348,17 +385,3 @@ uint32_t layer_state_set_user(uint32_t state) {
     return state;
 }
 
-
-/* void led_set_layer(int layer) { */
-/*     switch(layer) { */
-/*         case 0: */
-/*             set_layer_led(0); // Turn on only the first layer indicator */
-/*             break; */
-/*         case 1: */
-/*             set_layer_led(1); // Turn on only the second layer indicator */
-/*             break; */
-/*         case 2: */
-/*             set_layer_led(2); // Turn on only the third layer indicator */
-/*             break; */
-/*     } */
-/* } */
