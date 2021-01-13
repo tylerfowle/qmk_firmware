@@ -8,6 +8,33 @@
 // CHANGE THIS
 // -------------------
 
+// layouts
+#define _GAME 0
+#define _MAC 1
+#define _WIN 2
+#define _RHAND 3
+#define _NUM 4
+#define _SYM 5
+#define _ARROW 6
+#define _LAYERS 7
+
+enum custom_keycodes {
+    // layers keys
+    GAME = SAFE_RANGE,
+    MAC,
+    WIN,
+    RHAND,
+    NUM,
+    SYM,
+    ARROW,
+    LAYERS,
+    // custom keys
+    JSMODE,
+    JSKEYS,
+};
+
+// Joystick stuff
+
 // joystick mode
 static int joystickMode = 1;  // 0=analog, 1=keys
 #define joystick_modes 2 // amount of modes
@@ -17,11 +44,13 @@ static int joystickKeysMode = 2;  // arrows, wasd, mods
 #define joystick_keys_modes 3 // amount of key modes
 
 // joystick direction -> up, left, down, right
-static char joykeys[joystick_keys_modes][4] = {
+
+static int joykeys[joystick_keys_modes][4] = {
     {KC_UP, KC_LEFT, KC_DOWN, KC_RIGHT},
     {KC_W, KC_A, KC_S, KC_D},
-    {KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT},
+    {KC_LGUI, KC_LCTL, KC_LALT, MO(3)},
 };
+
 // -------------------
 
 static int actuation = 256; // actuation point for arrows (0-511)
@@ -43,29 +72,6 @@ void keyboard_pre_init_user(void) {
     /* writePin(LED1, 50); */
 }
 
-
-// layouts
-#define _GAME 0
-#define _MAC 1
-#define _WIN 2
-#define _NUM 3
-#define _SYM 4
-#define _ARROW 5
-#define _LAYERS 6
-
-enum custom_keycodes {
-    // layers keys
-    GAME = SAFE_RANGE,
-    MAC,
-    WIN,
-    NUM,
-    SYM,
-    ARROW,
-    LAYERS,
-    // custom keys
-    JSMODE,
-    JSKEYS,
-};
 
 // for readability
 // -------------------
@@ -104,52 +110,62 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             M(0),    KC_1,    KC_2,    KC_3,    KC_4,   KC_5,  KC_BSPC,
             KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,
             TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,   KC_G,
-            TO(2),   KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,  KC_B,
+            TG(2),   KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,  KC_B,
             KC_LCTL, KC_LALT, KC_LGUI, JSKEYS,  HYPRSPC
             ),
 
     // 2
     [_WIN] = LAYOUT(
-            M(0),    KC_1,    KC_2,    KC_3,    KC_4,   KC_5,  KC_BSPC,
-            KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,
-            TAB_FN,  KC_A,    KC_S,    KC_D,    KC_F,   KC_G,
-            TO(3),   KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,  KC_B,
-            KC_LALT, KC_LGUI, KC_LCTL, _______, HYPRSPC
+
+            _______, _______, _______, _______, _______, _______, _______,
+            _______, _______, _______, _______, _______, _______,
+            _______, _______, _______, _______, _______, _______,
+            TG(3),   _______, _______, _______, _______, _______, _______,
+            KC_LALT, KC_LGUI, KC_LCTL, _______, _______
             ),
 
     // 3
-    [_NUM] = LAYOUT(
-            KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F5,
-            _______, KC_1,    KC_2,    KC_3,    KC_4,    _______,
-            _______, KC_5,    KC_6,    KC_7,    KC_8,    _______,
-            TO(4),   KC_9,    KC_0,    KC_MINS, KC_EQL,  _______, _______,
+    [_RHAND] = LAYOUT(
+            _______, _______, _______, _______, _______, _______, _______,
+            _______, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+            KC_ENT,  KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,
+            TO(4),   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
             _______, _______, _______, _______, _______
             ),
 
     // 4
-    [_SYM] = LAYOUT(
-            _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
-            _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______,
-            _______, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______,
-            TO(5),   KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______, _______,
+    [_NUM] = LAYOUT(
+            KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F5,
+            _______, KC_1,    KC_2,    KC_3,    KC_4,    _______,
+            _______, KC_5,    KC_6,    KC_7,    KC_8,    _______,
+            TO(5),   KC_9,    KC_0,    KC_MINS, KC_EQL,  _______, _______,
             _______, _______, _______, _______, _______
             ),
 
     // 5
+    [_SYM] = LAYOUT(
+            _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
+            _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  _______,
+            _______, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, _______,
+            TO(6),   KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______, _______,
+            _______, _______, _______, _______, _______
+            ),
+
+    // 6
     [_ARROW] = LAYOUT(
             _______, _______, _______, _______,  _______, _______, KC_DEL,
             _______, KC_HOME, KC_UP,   KC_END,   _______, _______,
             _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______, _______,
-            TO(6),   _______, _______, _______,  _______, _______, _______,
+            TO(7),   _______, _______, _______,  _______, _______, _______,
             _______, _______, _______, _______,  _______
             ),
 
-    // 6
+    // 7
     [_LAYERS] = LAYOUT(
             RESET,   GAME,    MAC,     WIN,     NUM,     SYM,     ARROW,
             _______, _______, _______, _______, _______, _______,
             _______, _______, _______, _______, _______, _______,
-            TG(6),   _______, _______, _______, _______, _______, _______,
+            TG(7),   _______, _______, _______, _______, _______, _______,
             _______, _______, _______, _______, _______
             ),
 
@@ -347,35 +363,38 @@ uint32_t layer_state_set_user(uint32_t state) {
     writePin(LED3, 0);
 
     switch(biton32(state)) {
-
         case 0:
-            writePin(LED1, 50);
+            // no lights
             break;
 
         case 1:
-            writePin(LED2, 50);
+            writePin(LED1, 50);
             break;
 
         case 2:
-            writePin(LED3, 50);
+            writePin(LED2, 50);
             break;
 
         case 3:
-            writePin(LED1, 50);
-            writePin(LED2, 50);
+            writePin(LED3, 50);
             break;
 
         case 4:
             writePin(LED1, 50);
-            writePin(LED3, 50);
+            writePin(LED2, 50);
             break;
 
         case 5:
+            writePin(LED1, 50);
+            writePin(LED3, 50);
+            break;
+
+        case 6:
             writePin(LED2, 50);
             writePin(LED3, 50);
             break;
 
-        case 6: // LAYERS
+        case 7: // LAYERS
             writePin(LED1, 50);
             writePin(LED2, 50);
             writePin(LED3, 50);
